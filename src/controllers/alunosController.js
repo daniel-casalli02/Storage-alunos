@@ -18,7 +18,7 @@ export const criar = async (req, res) => {
             return res.status(400).json({ error: 'O campo "materia" é obrigatório!' });
         }
 
-        const alunos = new AlunosModel({ nome, materia, turma: parseFloat(turma) });
+        const alunos = new AlunosModel({ nome, materia, turma });
         const data = await alunos.criar();
 
         return res.status(201).json({ message: 'Registro criado com sucesso!', data });
