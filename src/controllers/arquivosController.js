@@ -9,13 +9,13 @@ const uploadArquivo = (tipo) => async (req, res) => {
         const { id } = req.params;
         if (isNaN(id)) return res.status(400).json({ error: 'ID inválido.' });
 
-        const exemplo = await AlunoModel.buscarPorId(parseInt(id));
-        if (!exemplo) return res.status(404).json({ error: 'Registro não encontrado.' });
+        const aluno = await AlunoModel.buscarPorId(parseInt(id));
+        if (!aluno) return res.status(404).json({ error: 'Registro não encontrado.' });
         if (!req.file) return res.status(400).json({ error: 'Nenhum arquivo enviado.' });
 
-        if (exemplo[tipo]) await deletarStorage(exemplo[tipo]);
-        exemplo[tipo] = await uploadStorage(id, req.file);
-        const data = await exemplo.atualizar();
+        if (aluno[tipo]) await deletarStorage(aluno[tipo]);
+        aluno[tipo] = await uploadStorage(id, req.file);
+        const data = await aluno.atualizar();
 
         return res.status(200).json({ message: `${tipo} enviado com sucesso!`, url: data[tipo] });
     } catch (error) {
@@ -28,11 +28,11 @@ const buscarArquivo = (tipo) => async (req, res) => {
         const { id } = req.params;
         if (isNaN(id)) return res.status(400).json({ error: 'ID inválido.' });
 
-        const exemplo = await AlunoModel.buscarPorId(parseInt(id));
-        if (!exemplo) return res.status(404).json({ error: 'Registro não encontrado.' });
-        if (!exemplo[tipo]) return res.status(404).json({ error: `Nenhum ${tipo} cadastrado.` });
+        const aluno = await AlunoModel.buscarPorId(parseInt(id));
+        if (!aluno) return res.status(404).json({ error: 'Registro não encontrado.' });
+        if (!aluno[tipo]) return res.status(404).json({ error: `Nenhum ${tipo} cadastrado.` });
 
-        return res.status(200).json({ url: exemplo[tipo] });
+        return res.status(200).json({ url: aluno[tipo] });
     } catch (error) {
         return res.status(500).json({ error: `Erro ao buscar ${tipo}.` });
     }
@@ -43,13 +43,13 @@ const deletarArquivo = (tipo) => async (req, res) => {
         const { id } = req.params;
         if (isNaN(id)) return res.status(400).json({ error: 'ID inválido.' });
 
-        const exemplo = await AlunoModel.buscarPorId(parseInt(id));
-        if (!exemplo) return res.status(404).json({ error: 'Registro não encontrado.' });
-        if (!exemplo[tipo]) return res.status(404).json({ error: `Nenhum ${tipo} para remover.` });
+        const aluno = await AlunoModel.buscarPorId(parseInt(id));
+        if (!aluno) return res.status(404).json({ error: 'Registro não encontrado.' });
+        if (!aluno[tipo]) return res.status(404).json({ error: `Nenhum ${tipo} para remover.` });
 
-        await deletarStorage(exemplo[tipo]);
-        exemplo[tipo] = null;
-        await exemplo.atualizar();
+        await deletarStorage(aluno[tipo]);
+        aluno[tipo] = null;
+        await aluno.atualizar();
 
         return res.status(200).json({ message: `${tipo} removido com sucesso!` });
     } catch (error) {
