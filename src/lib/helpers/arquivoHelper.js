@@ -1,7 +1,7 @@
 import sharp from 'sharp';
 import supabase from '../services/supabase.js';
 
-const BUCKET = 'arquivos';
+const BUCKET = 'arquiv';
 
 const prepararFoto = async (buffer) =>
     sharp(buffer).resize({ width: 800, withoutEnlargement: true }).webp({ quality: 80 }).toBuffer();
