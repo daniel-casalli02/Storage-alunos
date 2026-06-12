@@ -19,7 +19,9 @@ const uploadArquivo = (tipo) => async (req, res) => {
 
         return res.status(200).json({ message: `${tipo} enviado com sucesso!`, url: data[tipo] });
     } catch (error) {
-        return res.status(500).json({ error: `Erro ao fazer upload do ${tipo}.` });
+        return res.status(500).json({
+            error: `Erro ao fazer upload do ${tipo}.`,
+        erro: error.message});
     }
 };
 
