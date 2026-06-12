@@ -2,10 +2,10 @@ import express from 'express';
 import 'dotenv/config';
 import alunosRoutes from './routes/alunosRoute.js';
 import { apiKey } from './lib/middlewares/apiKey.js'
-import arquivoRoutes from './routes/arquivoRoute.js';
+import arquivoRoutes from './routes/arquivosRoute.js';
 
 const app = express();
-const PORT = process.env.PORT || 3001;  
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 
