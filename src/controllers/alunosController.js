@@ -60,7 +60,7 @@ export const buscarPorId = async (req, res) => {
         return res.status(200).json({ data: alunos });
     } catch (error) {
         console.error('Erro ao buscar:', error);
-        return res.status(500).json({ error: 'Erro ao buscar registro.' });
+        return res.status(500).json({ error: 'Erro ao buscar registro.', error });
     }
 };
 
@@ -89,7 +89,7 @@ export const atualizar = async (req, res) => {
             alunos.materia = req.body.materia;
         }
         if (req.body.turma !== undefined) {
-            alunos.turma = parseFloat(req.body.turma);
+            alunos.turma = req.body.turma;
         }
 
         const data = await alunos.atualizar();
@@ -97,7 +97,7 @@ export const atualizar = async (req, res) => {
         return res.status(200).json({ message: `O registro "${data.nome}" foi atualizado com sucesso!`, data });
     } catch (error) {
         console.error('Erro ao atualizar:', error);
-        return res.status(500).json({ error: 'Erro ao atualizar registro.' });
+        return res.status(500).json({ error: 'Erro ao atualizar registro.', error });
     }
 };
 
